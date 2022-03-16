@@ -4,7 +4,7 @@ import './category-item.styles.scss';
 
 const CategoryItem = ({ category }) => {
 	const { title, imageUrl } = category; 
-	
+
 	return (
 		<div className="category-container">
 			<div
@@ -13,7 +13,7 @@ const CategoryItem = ({ category }) => {
 					backgroundImage: `url(${imageUrl})`,
 				}} />
 			<div className="category-body-container">
-				<h2>{title}</h2>
+				<h2>{title.toUpperCase()}</h2>
 				<p>SHOP NOW</p>
 			</div>
 		</div>
