@@ -23,7 +23,8 @@ import { ReactComponent as CrwnLogo } from '../../asets/crown.svg'
 const Navigation = () => {
 
 	const { currentUser } = useContext(userContext); 
-	const { isCartOpen } = useContext(CartContext); 
+	const { isCartOpen, setIsCartOpen } = useContext(CartContext); 
+	const handleToggle = () => setIsCartOpen(!isCartOpen); 
 
 	return (
 		<Fragment>
@@ -42,7 +43,7 @@ const Navigation = () => {
 						: (
 							<Link className="nav-link" to='/auth'>SIGN IN</Link>)
 					}
-					<CartIcon/>		
+					<CartIcon onClick={handleToggle}/>		
 				</div>
 				{isCartOpen && <CartDropdown />}
 			</div>
