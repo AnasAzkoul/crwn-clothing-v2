@@ -1,3 +1,4 @@
+
 import { initializeApp } from 'firebase/app'; 
 import {
 	getAuth,
@@ -13,10 +14,16 @@ import {
 	getFirestore, 
 	doc,
 	getDoc, 
-	setDoc
- } from 'firebase/firestore'
-
+	setDoc,
+	collection, 
+	writeBatch,
+	query, 
+	getDocs,
+} from 'firebase/firestore'
+ 
+// ________________________________________________________________________________________________
 // Your web app's Firebase configuration
+
 const firebaseConfig = {
 	apiKey: "AIzaSyCwddU85Pt7dtm7Trwdad-AZadPFMPdvHQ",
 	authDomain: "crwn-clothing-db-b5030.firebaseapp.com",
@@ -29,21 +36,56 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 
+export const auth = getAuth(); 
 
-const googleProvider = new GoogleAuthProvider(); 
+export const db = getFirestore(); 
+
+// ________________________________________________________________________________________________
+// saving, getting products data from the data base; 
+
+export const addCollectionsAndDocuments = async (collectionKey, objectsToAdd) => {
+	const collectionRef = collection(db, collectionKey);
+	const batch = writeBatch(db); 
+
+	objectsToAdd.forEach(object => {
+		const docRef = doc(collectionRef, object.title.toLowerCase()); 
+		batch.set(docRef, object); 
+	});
+
+	await batch.commit(); 
+	console.log('done'); 
+}
+
+export const getCategoriesAndDocuments = async () => {
+	const collectionRef = collection(db, 'categories'); 
+	const q = query(collectionRef); 
+
+	const querySnapshot = await getDocs(q); 
+	const categoryMap = querySnapshot.docs.reduce((accu, docSnapshot) => {
+		const { title, items } = docSnapshot.data(); 
+		accu[title.toLowerCase()] = items; 
+		return accu; 
+	}, {})
+
+	return categoryMap; 
+}
+
+
+// ________________________________________________________________________________________________
+// Authentication, sign-in, sign-out, and saving user data to the database
+
+// sign-in with Google; 
+const googleProvider = new GoogleAuthProvider();
 
 googleProvider.setCustomParameters({
 	prompt: 'select_account'
 })
 
-export const auth = getAuth(); 
-
-export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider); 
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
 export const signInwithGoogleRedirect = () => signInWithRedirect(auth, googleProvider); 
 
 
-export const db = getFirestore(); 
-
+// saving user data to the data base; 
 export const createUserProfileFromAuth = async (
 	userAuth,
 	additionalInformation ={}
@@ -73,6 +115,8 @@ export const createUserProfileFromAuth = async (
 	return userDocRef; 
 }
 
+
+// sign-up authentication 
 export const createAuthUserWithEmailAndPassowrd = async (email, password) => {
 	if (!email || !password) return; 
 
@@ -80,14 +124,16 @@ export const createAuthUserWithEmailAndPassowrd = async (email, password) => {
 }
 
 
+// sign-in with email and passowrd; 
+
 export const signInAuthUserWithEmailAndPassowrd = async (email, password) => {
 	if (!email || !password) return; 
 
 	return await signInWithEmailAndPassword(auth, email, password); 
 }
 
+// sign-out 
+
 export const signOutUser = async () => await signOut(auth); 
 
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback)
-
-
+export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback); 

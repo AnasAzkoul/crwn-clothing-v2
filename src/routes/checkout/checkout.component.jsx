@@ -5,7 +5,7 @@ import { CartContext } from "../../contexts/cart-dropdown.context";
 
 import { Link } from "react-router-dom";
 
-import "./checkout.styles.scss"; 
+import { CheckoutContainer, CheckoutHeader, HeaderBlock, Total } from "./checkout.styles"; 
 
 const Checkout = () => {
 	const {
@@ -21,29 +21,29 @@ const Checkout = () => {
 	useEffect(() => updateTotal());
 
 	return (
-		<div className="checkout-container">
+		<CheckoutContainer>
 			<h1>Checkout Page</h1>
-			<div className="checkout-header">
-				<div className="header-block">
+			<CheckoutHeader>
+				<HeaderBlock>
 					<span>product</span>
-				</div>
+				</HeaderBlock>
 
-				<div className="header-block">
+				<HeaderBlock>
 					<span>Discribtion</span>
-				</div>
+				</HeaderBlock>
 
-				<div className="header-block">
+				<HeaderBlock>
 					<span>Quantity</span>
-				</div>
+				</HeaderBlock>
 
-				<div className="header-block">
+				<HeaderBlock>
 					<span>price</span>
-				</div>
+				</HeaderBlock>
 
 				<div className="header-block">
 					<span>Remove</span>
 				</div>
-			</div>
+			</CheckoutHeader>
 				{
 					cartItems.map((cartItem) => {
 						const { id } = cartItem; 
@@ -59,13 +59,13 @@ const Checkout = () => {
 					})
 			}
 			{
-				total ? <span className="total">Total: {total}</span>
+				total ? <Total>Total: {total}</Total>
 					: <span>No item Selected, go to
 						<Link to='/shop'> Shop</Link>
 					</span>
 			}
 			
-		</div>
+		</CheckoutContainer>
 	)
 }
 

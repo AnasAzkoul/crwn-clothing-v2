@@ -1,6 +1,14 @@
 import React from "react";
 
-import "./checkout-item.styles.scss"; 
+import {
+	CheckoutItemContainer,
+	ImageContainer,
+	BaseSpan,
+	Quantity,
+	Arrow, 
+	Value, 
+	RemoveButton,
+} from "./checkout-item.styles"; 
 
 
 const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
@@ -19,27 +27,27 @@ const CheckoutItem = ({ cartItem, addItem, removeItem, clearItem }) => {
 	}
 
 	return (
-		<div className="checkout-item-container">
-			<div className="image-container ">
+		<CheckoutItemContainer>
+			<ImageContainer>
 				<img src={imageUrl} alt={`${name}`} />
-			</div>
+			</ImageContainer>
 			
-			<span className="name">{name}</span>
+			<BaseSpan>{name}</BaseSpan>
 
-			<span className="quantity">
-				<div className="arrow" onClick={decrementHandler}>
+			<Quantity>
+				<Arrow onClick={decrementHandler}>
 					&#10094;
-				</div>
-				<span className="value">{quantity}</span>
-				<div className="arrow" onClick={incrementHandler}>
+				</Arrow>
+				<Value>{quantity}</Value>
+				<Arrow onClick={incrementHandler}>
 					&#10095;
-				</div>
-			</span>
+				</Arrow>
+			</Quantity>
 
-			<span className="price">{quantity * price}</span>
+			<BaseSpan>{quantity * price}</BaseSpan>
 
-			<span onClick={clearItemHandler} className="remove-button">&#10005;</span>
-		</div>
+			<RemoveButton onClick={clearItemHandler}>&#10005;</RemoveButton>
+		</CheckoutItemContainer>
 	)
 }
 
