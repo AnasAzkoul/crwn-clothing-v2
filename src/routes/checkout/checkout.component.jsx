@@ -1,24 +1,18 @@
 import React from "react";
+// //components 
 import CheckoutItem from "../../Components/checkout-item/checkout-item.component";
-import { useContext, useEffect } from "react";
-import { CartContext } from "../../contexts/cart-dropdown.context";
+// //redux
+import { useSelector } from "react-redux";
+import { selectCartItems, selectCartTotal } from "../../Store/cart/cart.selector";
 
+// //router 
 import { Link } from "react-router-dom";
-
+// //styles
 import { CheckoutContainer, CheckoutHeader, HeaderBlock, Total } from "./checkout.styles"; 
 
 const Checkout = () => {
-	const {
-		cartItems,
-		addItemTocart,
-		removeItemFromCart,
-		clearItemFromCart,
-		total, 
-		updateTotal, 
-	} = useContext(CartContext); 
-
-
-	useEffect(() => updateTotal());
+	const cartItems = useSelector(selectCartItems); 
+	const cartTotal = useSelector(selectCartTotal); 
 
 	return (
 		<CheckoutContainer>
@@ -51,15 +45,12 @@ const Checkout = () => {
 							<CheckoutItem
 								key={id}
 								cartItem={cartItem}
-								addItem={addItemTocart}
-								removeItem={removeItemFromCart}
-								clearItem={clearItemFromCart}
 							/>	
 						)
 					})
 			}
 			{
-				total ? <Total>Total: {total}</Total>
+				cartTotal ? <Total>Total: {cartTotal}</Total>
 					: <span>No item Selected, go to
 						<Link to='/shop'> Shop</Link>
 					</span>

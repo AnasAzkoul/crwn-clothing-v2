@@ -1,33 +1,32 @@
 import React from "react";
 import { Fragment } from "react";
-
+// //components
 import CartIcon from "../../Components/cart-icon/cart-icon.component";
 import CartDropdown from "../../Components/cart-dropdown/cart-dropdown.component";
-
-
-import { useContext } from "react";
-import { userContext } from "../../contexts/user.context";
-import { CartContext } from "../../contexts/cart-dropdown.context"
-
-
-import { Outlet } from "react-router-dom";
-
-import { signOutUser } from "../../Utils/firebase.utils";
-
-
 import { ReactComponent as CrwnLogo } from '../../asets/crown.svg'
+// //context
+import { selectIsCartOpen } from "../../Store/cart/cart.selector";
 
-// import styles 
-import { NavigationContianer, LogoContainer, NavLinks, NavLink } from "./navigation.styles";
-
-
+// //redux
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../Store/User/user.selector";
+// //Router 
+import { Outlet } from "react-router-dom";
+// //firebase
+import { signOutUser } from "../../Utils/firebase.utils";
+//// styles 
+import {
+	NavigationContianer,
+	LogoContainer, 
+	NavLinks, NavLink
+} from "./navigation.styles";
 
 
 const Navigation = () => {
 
-	const { currentUser } = useContext(userContext); 
-	const { isCartOpen, setIsCartOpen } = useContext(CartContext); 
-	const handleToggle = () => setIsCartOpen(!isCartOpen); 
+	const currentUser = useSelector(selectCurrentUser)
+	const isCartOpen = useSelector(selectIsCartOpen)
+
 
 	return (
 		<Fragment>
@@ -46,7 +45,7 @@ const Navigation = () => {
 						: (
 							<NavLink to='/auth'>SIGN IN</NavLink>)
 					}
-					<CartIcon onClick={handleToggle}/>		
+					<CartIcon/>		
 				</NavLinks>
 				{isCartOpen && <CartDropdown />}
 			</NavigationContianer>
