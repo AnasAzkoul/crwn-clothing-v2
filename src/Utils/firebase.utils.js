@@ -34,6 +34,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+// eslint-disable-next-line no-unused-vars
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth = getAuth(); 
@@ -74,12 +75,15 @@ googleProvider.setCustomParameters({
 	prompt: 'select_account'
 })
 
-export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
-export const signInwithGoogleRedirect = () => signInWithRedirect(auth, googleProvider); 
+export const signInWithGooglePopup = () => 
+signInWithPopup(auth, googleProvider);
+
+export const signInwithGoogleRedirect = () => 
+signInWithRedirect(auth, googleProvider); 
 
 
 // saving user data to the data base; 
-export const createUserProfileFromAuth = async (
+export const createUserDocumentFromAuth = async (
 	userAuth,
 	additionalInformation ={}
 ) => {
@@ -105,7 +109,7 @@ export const createUserProfileFromAuth = async (
 		}
 	}
 
-	return userDocRef; 
+	return userSnapshot; 
 }
 
 
@@ -129,4 +133,18 @@ export const signInAuthUserWithEmailAndPassowrd = async (email, password) => {
 
 export const signOutUser = async () => await signOut(auth); 
 
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback); 
+export const onAuthStateChangedListener = (callback) => 
+onAuthStateChanged(auth, callback); 
+
+export const getCurrentUser = () => {
+	return new Promise((resolve, reject) => {
+		const unsubscribe = onAuthStateChanged(
+			auth, 
+			(userAuth) => {
+				unsubscribe(); 
+				resolve(userAuth); 
+			}, 
+			reject
+		); 
+	}); 
+}; 

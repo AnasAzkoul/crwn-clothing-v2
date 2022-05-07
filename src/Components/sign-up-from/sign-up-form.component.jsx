@@ -2,12 +2,16 @@ import { useState } from "react";
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
+// // Firebase 
+// import {
+// 	createAuthUserWithEmailAndPassowrd,
+// 	createUserProfileFromAuth
+// } from "../../Utils/firebase.utils"; 
+// Sagas and redux 
+import { signUpStart } from "../../Store/User/user.action";
+import { useDispatch } from "react-redux";
 
-import {
-	createAuthUserWithEmailAndPassowrd,
-	createUserProfileFromAuth
-} from "../../Utils/firebase.utils"; 
-
+// Styled Components 
 import { SignUpContainer } from './sign-up-form.styles';
 
 
@@ -21,37 +25,37 @@ const defaultFormFields = {
 
 const SignUpForm = () => {
 	const [formFields, setFormFields] = useState(defaultFormFields); 
-
 	const { displayName, email, password, confirmPassword } = formFields; 
+	const dispatch = useDispatch(); 
 
 	const resetFormFields = () => {
 		setFormFields(defaultFormFields); 
 	}
 	
-	const handleChange = (event) => {
-		const { name, value } = event.target; 
-		setFormFields({...formFields, [name]: value})
-	}
-
-	const handleSubmit = async event => {
+	const handleSubmit = async (event) => {
 		event.preventDefault();
-
+  
 		if (password !== confirmPassword) {
-			alert("Passowrds do not match")
-			return; 
+		  alert('passwords do not match');
+		  return;
 		}
-
+  
 		try {
-			const {user} = await createAuthUserWithEmailAndPassowrd(email, password)
-			await createUserProfileFromAuth(user, { displayName }); 
-			resetFormFields(); 
+			dispatch(signUpStart(email, password, displayName));
+		   resetFormFields();
 		} catch (error) {
-			if (error.code === 'auth/email-already-in-use') {
-				alert('cannot create user, email already exists'); 
-			} else {
-				console.log(error.message)
-			}
+		  if (error.code === 'auth/email-already-in-use') {
+			 alert('Cannot create user, email already in use');
+		  } else {
+			 console.log('user creation encountered an error', error);
+		  }
 		}
+	 };
+
+	 const handleChange = (event) => {
+		const { name, value } = event.target; 
+
+		setFormFields({...formFields, [name]: value})
 	}
 
 	return (

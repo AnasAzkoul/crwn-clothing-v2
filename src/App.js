@@ -9,11 +9,7 @@ import Checkout from "./routes/checkout/checkout.component";
 // //redux
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import {
-	onAuthStateChangedListener,
-	createUserProfileFromAuth
-} from "./Utils/firebase.utils";
-import { setCurrentUser } from "./Store/User/user.action";
+import { checkUserSession } from "./Store/User/user.action";
 
 
 const App = () => {
@@ -21,13 +17,7 @@ const App = () => {
 	const dispatch = useDispatch(); 
 
 	useEffect(() => {
-		const unsubscribe = onAuthStateChangedListener(user => {
-			if (user) {
-				createUserProfileFromAuth(user);
-			}
-			return dispatch(setCurrentUser(user))
-		})
-		return unsubscribe;
+		dispatch(checkUserSession())
 	}, [])
 
 
