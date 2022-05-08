@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-// //router
+// router
 import { Routes, Route } from 'react-router-dom';
-// //components 
+// components 
 import CategoriesPreview from '../categories-preview/categories-preview.component';
 import Category from '../category/category.component';
-// //redux 
+// redux 
 import { useDispatch } from "react-redux";
 import {fetchCategoriesStart} from '../../Store/categories/categories.action.js'
 

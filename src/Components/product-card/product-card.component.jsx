@@ -1,18 +1,17 @@
 import React from "react";
+// redux
 import { useSelector, useDispatch } from 'react-redux'; 
 import { selectCartItems } from '../../Store/cart/cart.selector'
 import { addItemTocart } from '../../Store/cart/cart.action'
-
+// components 
 import Button, {BUTTON_TYPE_CLASSES} from "../button/button.component";
-
-
+// Styled components 
 import {
 	ProductCartContainer,
 	Footer,
 	Name,
 	Price,
 } from './product-card.styles';
-
 
 const ProductCard = ({ product }) => {
 	const { name, price, imageUrl } = product; 

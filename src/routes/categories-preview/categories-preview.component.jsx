@@ -1,8 +1,9 @@
 import React from "react";
 import { Fragment } from "react";
+// Components
 import CategoryPreview from "../../Components/category-preview/category-preview.component";
 import Spinner from '../../Components/spinner/spinner.component'; 
-
+// Redux
 import { useSelector } from "react-redux";
 import { selectCategoriesIsLoading, selectCategoriesMap } from "../../Store/categories/ctaegories.selector";
 

@@ -1,12 +1,13 @@
 import React from "react";
-import Spinner from '../../Components/spinner/spinner.component'
 import { useState, useEffect, Fragment } from 'react';
-import { useParams } from 'react-router-dom';
-
+// Components
+import Spinner from '../../Components/spinner/spinner.component'; 
 import ProductCard from '../../Components/product-card/product-card.component';
-
+// react-router
+import { useParams } from 'react-router-dom';
+// styled commponents
 import { CategoryContainer, Title } from './category.styles';
-
+// redux 
 import { useSelector } from "react-redux";
 import { selectCategoriesMap, selectCategoriesIsLoading } from "../../Store/categories/ctaegories.selector";
 

@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { selectCartTotal } from '../../Store/cart/cart.selector'; 
 import { selectCurrentUser } from '../../Store/User/user.selector'; 
 
-import Button, {BUTTON_TYPE_CLASSES} from "../button/button.component";
+import {BUTTON_TYPE_CLASSES} from "../button/button.component";
 
 // Styled Components 
 import {PaymentFormContainer, FormContainer, PaymentButton} from './payment-form.styles'; 
