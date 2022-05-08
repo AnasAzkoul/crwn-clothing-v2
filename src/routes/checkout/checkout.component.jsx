@@ -1,13 +1,14 @@
 import React from "react";
-// //components 
+// components 
 import CheckoutItem from "../../Components/checkout-item/checkout-item.component";
-// //redux
+import PaymentForm from "../../Components/payment-form/payment-form.component";
+// redux
 import { useSelector } from "react-redux";
 import { selectCartItems, selectCartTotal } from "../../Store/cart/cart.selector";
 
-// //router 
+// router 
 import { Link } from "react-router-dom";
-// //styles
+// styles
 import { CheckoutContainer, CheckoutHeader, HeaderBlock, Total } from "./checkout.styles"; 
 
 const Checkout = () => {
@@ -55,7 +56,7 @@ const Checkout = () => {
 						<Link to='/shop'> Shop</Link>
 					</span>
 			}
-			
+			<PaymentForm />
 		</CheckoutContainer>
 	)
 }

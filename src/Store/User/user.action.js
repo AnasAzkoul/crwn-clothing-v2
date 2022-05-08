@@ -39,9 +39,9 @@ SIGN_IN_FAILURE: 'user/SIGN_IN_FAILURE'
 		createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, {user, additionalDetails}); 
 	 
 
-	export const signUpFailed = (error) =>
+	export const signUpFailed = (error) => 
 		createAction(USER_ACTION_TYPES.SIGN_UP_FAILED, error); 
-	 
+	
 
 	export const signOutStart= () => 
 		createAction(USER_ACTION_TYPES.SIGN_OUT_START)
@@ -49,8 +49,9 @@ SIGN_IN_FAILURE: 'user/SIGN_IN_FAILURE'
 	
 	export const signOutSuccess= () => 
 		createAction(USER_ACTION_TYPES.SIGN_OUT_SUCCESS); 
-	 
+	
 
 	export const signOutFailed= (error) => 
 		createAction(USER_ACTION_TYPES.SIGN_OUT_FAILED, error); 
 	
+
